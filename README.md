@@ -1,76 +1,200 @@
-<h2 align="center">
-  Portfolio Website - v2.0<br/>
-  <a href="https://soumyajit.vercel.app/" target="_blank">soumyajit.tech</a>
-</h2>
-<div align="center">
-  <img alt="Demo" src="./Images/readme-img1.png" />
-</div>
+# Rishitha Rayapati | Portfolio
 
-<br/>
+A personal developer portfolio showcasing my skills, projects, and experience as a Computer Science Engineering student. The portfolio includes a contact form powered by **Node.js, Express, and Nodemailer** to receive visitor inquiries directly by email.
 
-<center>
+## ✨ Features
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) &nbsp;
-![GitHub Repo stars](https://img.shields.io/github/stars/soumyajit4419/Portfolio?color=red&logo=github&style=for-the-badge) &nbsp;
-![GitHub forks](https://img.shields.io/github/forks/soumyajit4419/Portfolio?color=red&logo=github&style=for-the-badge)
+- Responsive personal portfolio website
+- Home, About, Projects, and Resume sections
+- Developer skills and project showcase
+- Contact form with email delivery using Nodemailer
+- Server-side email configuration using environment variables
+- Input validation and error handling
+- Success and error feedback for contact form submissions
+- Secure handling of email credentials
 
-</center>
+## 🛠️ Tech Stack
 
-<h3 align="center">
-    🔹
-    <a href="https://github.com/soumyajit4419/Portfolio/issues">Report Bug</a> &nbsp; &nbsp;
-    🔹
-    <a href="https://github.com/soumyajit4419/Portfolio/issues">Request Feature</a>
-</h3>
-
-## TL;DR
-
-You can fork this repo to modify and make changes of your own. Please give me proper credit by linking back to [Soumyajit4419](https://github.com/soumyajit4419/Portfolio). Thanks!
-
-## Built With
-
-My personal portfolio <a href="https://soumyajit.vercel.app/" target="_blank">soumyajit.tech</a> which features some of my github projects as well as my resume and technical skills.<br/>
-
-This project was built using these technologies.
-
+**Frontend**
 - React.js
+- JavaScript
+- HTML5 and CSS3
+- Bootstrap / existing UI libraries, if applicable
+
+**Backend**
 - Node.js
 - Express.js
-- CSS3
-- VsCode
-- Vercel
+- Nodemailer
 
-## Features
+**Email Service**
+- Gmail SMTP or another supported SMTP provider
 
-**📖 Multi-Page Layout**
+## 📁 Project Structure
 
-**🎨 Styled with React-Bootstrap and Css with easy to customize colors**
+```text
+portfolio/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── assets/
+│   └── ...
+├── server/
+│   ├── server.js
+│   ├── routes/
+│   └── ...
+├── .env.example
+├── .gitignore
+├── package.json
+└── README.md
+```
 
-**📱 Fully Responsive**
+*Note: The structure above is an example. Adjust it to match your actual project files.*
 
-## Getting Started
+## 🚀 Getting Started
 
-Clone down this repository. You will need `node.js` and `git` installed globally on your machine.
+### 1. Clone the repository
 
-## 🛠 Installation and Setup Instructions
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd portfolio
+```
 
-1. Installation: `npm install`
+Replace `<YOUR_REPOSITORY_URL>` with your GitHub repository URL.
 
-2. In the project directory, you can run: `npm start`
+### 2. Install dependencies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-The page will reload if you make edits.
+Install the frontend dependencies from the project root:
 
-## Usage Instructions
+```bash
+npm install
+```
 
-Open the project folder and Navigate to `/src/components/`. <br/>
-You will find all the components used and you can edit your information accordingly.
+If the backend has a separate `package.json`, install its dependencies too:
 
-### Show your support
+```bash
+cd server
+npm install
+```
 
-Give a ⭐ if you like this website!
+Install Nodemailer and Express in the backend only if they are not already installed:
 
-<a href="https://www.buymeacoffee.com/soumyajit4419" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" height= "60px" width= "217px" ></a>
+```bash
+npm install nodemailer express
+```
+
+### 3. Configure environment variables
+
+Create a `.env` file in the backend directory, or the location expected by your server code.
+
+```env
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_gmail_app_password
+CONTACT_RECEIVER=your_email@gmail.com
+```
+
+Replace the example values with your actual email configuration.
+
+**Important security practices:**
+- Never commit `.env` or real credentials to GitHub.
+- Keep `.env` in `.gitignore`.
+- Use `.env.example` to document required variable names with placeholder values.
+- Never expose SMTP credentials in React components or browser code.
+
+### 4. Configure Gmail SMTP
+
+If you use Gmail:
+
+1. Open your Google Account settings.
+2. Enable 2-Step Verification.
+3. Generate an App Password if your account is eligible.
+4. Set the generated App Password as `EMAIL_PASS`.
+5. Set `EMAIL_USER` and `CONTACT_RECEIVER` to the appropriate email addresses.
+
+Do not use your regular Gmail password.
+
+### 5. Run the application
+
+Start the backend using the command configured in its `package.json`. For example:
+
+```bash
+cd server
+npm start
+```
+
+Start the frontend in a separate terminal using its existing development command. For example:
+
+```bash
+npm start
+```
+
+If your frontend uses Vite, the command may instead be:
+
+```bash
+npm run dev
+```
+
+Use the commands defined in your actual project scripts.
+
+## 📧 How the Contact Form Works
+
+1. A visitor enters their name, email, subject, and message.
+2. The frontend submits the form data to the backend contact API.
+3. The backend validates the submitted information.
+4. Nodemailer sends an email using the configured SMTP service.
+5. The email arrives in the configured recipient inbox.
+6. The frontend displays a success or error message.
+
+The visitor's email address should be set as the reply-to address, allowing you to reply directly to their inquiry.
+
+## 🌐 Deployment
+
+### Frontend
+
+Deploy the frontend to a platform such as Vercel or Netlify.
+
+### Backend
+
+Deploy the Node.js backend to a supported server hosting platform, or use a suitable serverless function.
+
+Configure all required environment variables in the hosting platform's project settings.
+
+Ensure the frontend's API URL points to the deployed backend and that the backend accepts requests from the correct frontend origin.
+
+**Note:** A frontend deployed on Vercel does not automatically host a separate Express server. Use a supported Vercel Function or deploy the backend separately.
+
+## 🧪 Testing
+
+Before publishing, verify that:
+
+- Valid contact form submissions are accepted.
+- Emails arrive in the configured inbox.
+- The reply-to address matches the visitor's email.
+- Missing or invalid fields are rejected.
+- SMTP failures produce appropriate error messages.
+- Repeated submissions are appropriately rate-limited.
+- Credentials are not exposed in browser code or repository history.
+
+## 🔒 Security
+
+- Store SMTP credentials in server-side environment variables.
+- Validate and sanitize form inputs.
+- Implement rate limiting and spam protection.
+- Restrict cross-origin requests to trusted origins where appropriate.
+- Avoid returning internal SMTP errors or credentials to visitors.
+- Never log passwords or other secrets.
+
+## 👩‍💻 Author
+
+**Rishitha Rayapati**
+
+Computer Science Engineering Student | Aspiring Software Developer
+
+- GitHub: <YOUR_GITHUB_PROFILE_URL>
+- LinkedIn: <YOUR_LINKEDIN_PROFILE_URL>
+
+## 📄 License
+
+Add the license applicable to your project if you intend to distribute or reuse the source code.
