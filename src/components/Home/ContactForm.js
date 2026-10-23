@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col, Alert, Spinner } from "react-bootstrap";
 import axios from "axios";
 import { AiOutlineSend, AiOutlineMail, AiOutlinePhone, AiOutlineCopy, AiOutlineCheck } from "react-icons/ai";
-import { FiExternalLink } from "react-icons/fi";
+
 
 function ContactForm() {
   const [formData, setFormData] = useState({
