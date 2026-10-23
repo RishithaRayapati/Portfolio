@@ -4,18 +4,15 @@ import {
   SiExpress,
   SiPostgresql,
   SiMysql,
-  SiSupabase,
   SiHtml5,
   SiCss3,
 } from "react-icons/si";
-import C from "../../Assets/TechIcons/C++.svg";
+import C from "../../Assets/TechIcons/C.svg";
 import Javascript from "../../Assets/TechIcons/Javascript.svg";
 import Node from "../../Assets/TechIcons/Node.svg";
 import ReactIcon from "../../Assets/TechIcons/React.svg";
 import Java from "../../Assets/TechIcons/Java.svg";
 import Python from "../../Assets/TechIcons/Python.svg";
-import Git from "../../Assets/TechIcons/Git.svg";
-import Postman from "../../Assets/TechIcons/Postman.svg";
 import Tailwind from "../../Assets/TechIcons/Tailwind.svg";
 
 function Techstack() {
@@ -30,8 +27,8 @@ function Techstack() {
         <div className="tech-icons-text">JavaScript</div>
       </Col>
       <Col xs={4} md={2} className="tech-icons">
-        <img src={C} alt="C" />
-        <div className="tech-icons-text">C</div>
+        <img src={C} alt="C Language" />
+        <div className="tech-icons-text">C Language</div>
       </Col>
       <Col xs={4} md={2} className="tech-icons">
         <img src={Python} alt="Python" />
@@ -58,10 +55,6 @@ function Techstack() {
         <div className="tech-icons-text">PostgreSQL</div>
       </Col>
       <Col xs={4} md={2} className="tech-icons">
-        <SiSupabase fontSize={"28px"} />
-        <div className="tech-icons-text">Supabase</div>
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
         <SiHtml5 fontSize={"28px"} />
         <div className="tech-icons-text">HTML5</div>
       </Col>
@@ -72,14 +65,6 @@ function Techstack() {
       <Col xs={4} md={2} className="tech-icons">
         <img src={Tailwind} alt="Tailwind CSS" />
         <div className="tech-icons-text">Tailwind CSS</div>
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <img src={Git} alt="Git" />
-        <div className="tech-icons-text">Git</div>
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <img src={Postman} alt="Postman" />
-        <div className="tech-icons-text">Postman</div>
       </Col>
     </Row>
   );

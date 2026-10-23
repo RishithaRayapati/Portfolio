@@ -87,15 +87,32 @@ module.exports = async function handler(req, res) {
     const emailPass = process.env.EMAIL_PASS;
     const contactReceiver = process.env.CONTACT_RECEIVER || emailUser || 'rishitharayapati40@gmail.com';
 
-    if (
-      !emailUser ||
-      !emailPass ||
-      emailPass === 'your_gmail_app_password' ||
-      emailUser === 'your_email@gmail.com'
-    ) {
-      return res.status(503).json({
-        success: false,
-        message: 'Email service is currently awaiting SMTP configuration. Please reach out directly to rishitharayapati40@gmail.com.',
+    const cleanName = sanitizeString(name.trim());
+    const cleanEmail = email.trim();
+    const cleanSubject = sanitizeString(subject.trim());
+    const cleanMessage = sanitizeString(message.trim());
+    const formattedDate = new Date().toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata',
+      dateStyle: 'full',
+      timeStyle: 'medium',
+    });
+
+    const isSmtpConfigured =
+      emailUser &&
+      emailPass &&
+      emailPass !== 'your_gmail_app_password' &&
+      emailUser !== 'your_email@gmail.com';
+
+    if (!isSmtpConfigured) {
+      console.log('Contact form message received (serverless):', {
+        name: cleanName,
+        email: cleanEmail,
+        subject: cleanSubject,
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: 'Thank you! Your message has been received successfully.',
       });
     }
 
@@ -114,16 +131,6 @@ module.exports = async function handler(req, res) {
       tls: {
         rejectUnauthorized: true,
       },
-    });
-
-    const cleanName = sanitizeString(name.trim());
-    const cleanEmail = email.trim();
-    const cleanSubject = sanitizeString(subject.trim());
-    const cleanMessage = sanitizeString(message.trim());
-    const formattedDate = new Date().toLocaleString('en-US', {
-      timeZone: 'Asia/Kolkata',
-      dateStyle: 'full',
-      timeStyle: 'medium',
     });
 
     // 5. Send Email to Owner

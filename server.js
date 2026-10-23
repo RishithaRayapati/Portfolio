@@ -146,19 +146,55 @@ app.post('/api/contact', rateLimiter, async (req, res) => {
     const emailPass = process.env.EMAIL_PASS;
     const contactReceiver = process.env.CONTACT_RECEIVER || emailUser || 'rishitharayapati40@gmail.com';
 
-    if (
-      !emailUser ||
-      !emailPass ||
-      emailPass === 'your_gmail_app_password' ||
-      emailUser === 'your_email@gmail.com'
-    ) {
-      console.warn(
-        '\n[WARNING] EMAIL_USER or EMAIL_PASS is not configured in .env.\n' +
-        'Please add your real Gmail and 16-character Google App Password to .env to enable email delivery.\n'
-      );
-      return res.status(503).json({
-        success: false,
-        message: 'Email service is currently awaiting SMTP configuration. Please reach out directly to rishitharayapati40@gmail.com.',
+    const cleanName = sanitizeString(name.trim());
+    const cleanEmail = email.trim();
+    const cleanSubject = sanitizeString(subject.trim());
+    const cleanMessage = sanitizeString(message.trim());
+    const formattedDate = new Date().toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata',
+      dateStyle: 'full',
+      timeStyle: 'medium',
+    });
+
+    const isSmtpConfigured =
+      emailUser &&
+      emailPass &&
+      emailPass !== 'your_gmail_app_password' &&
+      emailUser !== 'your_email@gmail.com';
+
+    if (!isSmtpConfigured) {
+      console.log('\n=============================================');
+      console.log('📨 [DEV MODE] New Contact Submission Received:');
+      console.log(`From:    ${cleanName} <${cleanEmail}>`);
+      console.log(`Subject: ${cleanSubject}`);
+      console.log(`Date:    ${formattedDate}`);
+      console.log(`Message:\n${cleanMessage}`);
+      console.log('=============================================\n');
+
+      // Persist to contact_submissions.json
+      try {
+        const fs = require('fs');
+        const path = require('path');
+        const submissionsFile = path.join(__dirname, 'contact_submissions.json');
+        let records = [];
+        if (fs.existsSync(submissionsFile)) {
+          records = JSON.parse(fs.readFileSync(submissionsFile, 'utf8') || '[]');
+        }
+        records.push({
+          name: cleanName,
+          email: cleanEmail,
+          subject: cleanSubject,
+          message: cleanMessage,
+          date: formattedDate,
+        });
+        fs.writeFileSync(submissionsFile, JSON.stringify(records, null, 2), 'utf8');
+      } catch (saveErr) {
+        console.error('Error saving message record locally:', saveErr);
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Thank you! Your message has been received successfully. (Saved in development mode)',
       });
     }
 
@@ -177,16 +213,6 @@ app.post('/api/contact', rateLimiter, async (req, res) => {
       tls: {
         rejectUnauthorized: true,
       },
-    });
-
-    const cleanName = sanitizeString(name.trim());
-    const cleanEmail = email.trim();
-    const cleanSubject = sanitizeString(subject.trim());
-    const cleanMessage = sanitizeString(message.trim());
-    const formattedDate = new Date().toLocaleString('en-US', {
-      timeZone: 'Asia/Kolkata',
-      dateStyle: 'full',
-      timeStyle: 'medium',
     });
 
     // 5. Email to Portfolio Owner
